@@ -1,4 +1,4 @@
-name: CI Pipeline for Prod
+name: 2. Full CI/CD Pipeline (Test & Deploy)
 
 on:
   push:
@@ -6,6 +6,7 @@ on:
 
 jobs:
   test:
+    name: "Phase 1: CI (Test MongoDB & API)"
     runs-on: ubuntu-latest
     services:
       mongodb:
@@ -32,6 +33,7 @@ jobs:
           curl -f http://localhost:3000/api/products || exit 1
 
   deploy:
+    name: "Phase 2: CD (Build & Push Docker Hub)"
     needs: test
     runs-on: ubuntu-latest
     steps:
