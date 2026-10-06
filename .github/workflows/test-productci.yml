@@ -1,22 +1,3 @@
-name: Simple CI Pipeline # Tên của Workflow
-
-on:
-  push:
-    branches: [ "main" ] # Tự động kích hoạt mỗi khi push code vào nhánh main
-
-jobs:
-  build:
-    runs-on: ubuntu-latest # Sử dụng máy ảo Ubuntu do GitHub cung cấp
-    steps:
-    - uses: actions/checkout@v3 # Bước 1: Kéo code từ GitHub Repo về máy ảo
-    
-    - name: Use Node.js
-      uses: actions/setup-node@v3 # Bước 2: Cài môi trường Node.js trên máy ảo
-      with:
-        node-version: '18.x'
-        
-    - name: Install dependencies
-      run: npm install # Bước 3: Chạy lệnh cài thư viện để kiểm tra lỗi
 name: CI Pipeline for Prod
 
 on:
@@ -26,29 +7,26 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    
-    # Khai báo dịch vụ chạy kèm trong máy ảo GitHub
     services:
       mongodb:
         image: mongo:latest
         ports:
-          - 27017:27017 # Mở cổng MongoDB trên máy ảo GitHub
-          
+          - 27017:27017
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18.x'
-        
-    - run: npm install
-    
-    - name: Run server and test connection
-      env:
-        MONGO_URI: mongodb://localhost:27017/productdb
-        PORT: 3000
-      run: |
-        node index.js & # Dấu & giúp chạy ứng dụng Node ngầm để không bị treo terminal
-        sleep 5         # Đợi 5 giây cho Server khởi động xong
-        # Bắn lệnh curl kiểm tra xem API trả về kết quả 200 OK không
-        curl -f http://localhost:3000/api/products || exit 1
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - run: npm install
+
+      - name: Run server and test connection
+        env:
+          MONGO_URI: mongodb://localhost:27017/productdb
+          PORT: 3000
+        run: |
+          node server.js &
+          sleep 5
+          curl -f http://localhost:3000/api/products || exit 1
