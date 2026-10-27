@@ -1,4 +1,4 @@
-version: '3.8'
+
 services:
   mongodb:
     image: mongo:latest
@@ -6,11 +6,11 @@ services:
 
   api:
     # Lấy Image từ Docker Hub thay vì dùng lệnh 'build: .' từ source code
-    image: <tuyen-tai-khoan-docker-hub>/product-api:latest
+    image: thinhiuh/product-api:latest
     ports:
       - "80:3000" # Mở cổng 80 (cổng web chuẩn) ra ngoài
     environment:
-      - PORT=3000
-      - MONGO_URI=mongodb://mongodb:27017/productdb
+      - PORT=${PORT}
+      - MONGO_URI=${MONGO_URI}
     depends_on:
       - mongodb

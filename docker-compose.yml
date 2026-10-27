@@ -19,9 +19,8 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - PORT=3000
-      # Chú ý: Host đổi từ 'localhost' thành tên service 'mongodb'
-      - MONGO_URI=mongodb://mongodb:27017/productdb
+      - PORT=${PORT}
+      - MONGO_URI=${MONGO_URI}
     depends_on:
       mongodb:
         # Chỉ khởi động API khi dịch vụ MongoDB đạt trạng thái HEALTHY
