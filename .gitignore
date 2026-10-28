@@ -1,16 +1,5 @@
-# Dependencies
+
 node_modules/
 
 # Biến môi trường (chứa thông tin nhạy cảm)
 .env
-# Logs
-*.log
-npm-debug.log*
-
-# File rác hệ điều hành
-.DS_Store
-Thumbs.db
-
-# IDE
-.vscode/
-.idea/

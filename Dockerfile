@@ -18,4 +18,5 @@ EXPOSE 3000
 
 # 7. Lệnh mặc định sẽ chạy khi Container khởi động (tương đương gõ 'node index.js')
 # Đảm bảo dòng CMD cuối cùng gọi đúng file server.js
+# Thành:
 CMD ["node", "server.js"]
